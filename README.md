@@ -2,9 +2,7 @@
 
 **A beautifully fucked-up Skynet-powered browser automation AI Agent that harnesses neural brainfuck and machine learning chaos to give zero shits about anything while somehow still working perfectly. Smells like smegma but runs like a dream.**
 
-🌐 Website: https://uzdabrazor.com  
 🐙 GitHub: https://github.com/uzdabrazor/anal-core  
-📦 PyPI: https://pypi.org/project/uzdabrazor  
 
 ---
 
@@ -17,6 +15,15 @@ uzdabrazor is the most irreverent, crude, and effective neural brainfuck automat
 - **Terminator stealth mode** - Uses patchright to dodge bot detection like a shapeshifting T-1000
 - **Organized digital anarchy** - Crude language wrapped around Skynet-grade engineering
 - **Zero corporate Matrix bullshit** - No enterprise nonsense, just pure cyberpunk functional chaos
+
+---
+
+## 💻 System Requirements (Don't Skip This Shit)
+
+- **Python 3.11+** (anything older is prehistoric garbage)
+- **Chrome or Chromium** (for the actual browser automation, duh)
+- **Ollama server** (if you want free local AI, get it at https://ollama.ai)
+- **Patchright** (for stealth mode: `pip install patchright && patchright install`)
 
 ---
 
@@ -44,7 +51,7 @@ uzdabrazor --provider anthropic --model claude-opus-4-1
 
 | Provider       | Description                                                     | Example Model                             |
 | -------------- | --------------------------------------------------------------- | ----------------------------------------- |
-| **ollama**     | Local neural brainfuck (DEFAULT - fuck paying corporate Skynet) | `llava:13b`                               |
+| **ollama**     | Local neural brainfuck (DEFAULT - fuck paying corporate Skynet) | `llama3.1`                                |
 | **openai**     | Corporate machine learning overlord                             | `gpt-5-mini`                              |
 | **anthropic**  | Sophisticated cybernetic reasoning brain                        | `claude-opus-4-1`                         |
 | **google**     | Google's blazing neural terminator models                       | `gemini-2.5-flash`                        |
@@ -108,37 +115,59 @@ uzdabrazor --vision-detail high
 
 ## 🔧 Command Line Arguments
 
-| Flag                            | Description                        | Default               |
-| ------------------------------- | ---------------------------------- | --------------------- |
-| `--provider`                    | AI provider to use                 | `ollama`              |
-| `--model`                       | Specific model name                | `llava:13b`           |
-| `--task`                        | Task for the AI to perform         | Stealth test          |
-| `--headless`                    | Invisible browser mode             | `false`               |
-| `--no-stealth`                  | Disable stealth (live dangerously) | `false`               |
-| `--no-vision`                   | Disable AI vision                  | Vision enabled        |
-| `--window-width`                | Browser width                      | `1920`                |
-| `--window-height`               | Browser height                     | `1080`                |
-| `--browser-bin-path`            | Custom browser executable          | None                  |
-| `--cdp-url`                     | Connect to existing browser        | None                  |
-| `--browser-profile-dir`         | Custom profile directory           | None                  |
-| `--no-security`                 | Disable security features          | `false`               |
-| `--log-level`                   | Logging verbosity                  | `info`                |
-| `--dockerize`                   | Docker-optimized flags             | `false`               |
-| `--history-dir`                 | Output directory                   | `/tmp/agent_history`  |
+| Flag                            | Description                                      | Default               |
+| ------------------------------- | ------------------------------------------------ | --------------------- |
+| `--provider`                    | AI provider to use                               | `ollama`              |
+| `--model`                       | Specific model name                              | `llama3.1`            |
+| `--extraction-provider`         | Separate AI for page extraction (save cash)      | Same as `--provider`  |
+| `--extraction-model`            | Model for extraction tasks                       | Same as `--model`     |
+| `--task`                        | Task for the AI to perform                       | Stealth test          |
+| `--headless`                    | Invisible browser mode                           | `false`               |
+| `--no-stealth`                  | Disable stealth (live dangerously)               | `false`               |
+| `--no-vision`                   | Disable AI vision                                | Vision enabled        |
+| `--vision-detail`               | Vision detail level (`auto`/`low`/`high`)        | `auto`                |
+| `--window-width`                | Browser width                                    | `1920`                |
+| `--window-height`               | Browser height                                   | `1080`                |
+| `--browser-bin-path`            | Custom browser executable                        | None                  |
+| `--cdp-url`                     | Connect to existing browser                      | None                  |
+| `--browser-profile-dir`         | Custom profile directory                         | None                  |
+| `--no-security`                 | Disable security features                        | `false`               |
+| `--log-level`                   | Logging verbosity (`debug`/`info`/`warning`...)  | `info`                |
+| `--debug-host`                  | Debug server host                                | `localhost`           |
+| `--debug-port`                  | Debug server port                                | `9222`                |
+| `--dockerize`                   | Docker-optimized flags                           | `false`               |
+| `--skip-llm-api-key-verif`      | Skip API key validation (for testing/debugging)  | `false`               |
+| `--history-dir`                 | Output directory                                 | `/tmp/agent_history`  |
 
 ---
 
-## 🕵️ Surveillance Features
+## 🕵️ Surveillance Features (Big Brother Is Watching)
 
-uzdabrazor includes comprehensive LLM surveillance that monitors every `ainvoke` call:
+This beautiful bastard monkey-patches all LLM providers to log every single AI call. You'll see exactly when your neural overlords are thinking:
 
+**What Gets Logged:**
+- Every `ainvoke()` call to any LLM provider
+- Which model is being used
+- How many messages are in the prompt
+- What output format is requested
+
+**Example Output:**
 ```text
 🤖 OPENAI AINVOKE DETECTED! Model: gpt-5-mini is being a chatty bitch
    📝 Processing 5 messages with output_format: None
 
 ⚡ GROQ AINVOKE DETECTED! Model: llama-70b is going at lightning speed
    📝 Processing 3 messages with output_format: <class 'ActionResult'>
+
+🧠 ANTHROPIC AINVOKE DETECTED! Model: claude-opus-4-1 is thinking some fucked up thoughts
+   📝 Processing 12 messages with output_format: None
 ```
+
+This shit is useful for:
+- Debugging which model is actually being called
+- Understanding token usage patterns
+- Catching when browser-use makes unexpected AI calls
+- Feeling like a paranoid NSA cyborg monitoring everything
 
 ---
 
@@ -146,25 +175,75 @@ uzdabrazor includes comprehensive LLM surveillance that monitors every `ainvoke`
 
 Each run generates two files in your `--history-dir`:
 
-- `uzdabrazor_{provider}_{model}_{task_id}.gif`
-- `uzdabrazor_{provider}_{model}_{task_id}.json`
+- `uzdabrazor_{timestamp}_{unique_id}.gif` - Visual recording of all browser actions
+- `uzdabrazor_{timestamp}_{unique_id}.json` - Complete conversation history and task results
+
+Example filenames:
+```
+uzdabrazor_20250101_235959_a1b2c3d4.gif
+uzdabrazor_20250101_235959_a1b2c3d4.json
+```
 
 ---
 
-## 🏴‍☠️ Stealth Mode
+## 🏴‍☠️ Stealth Mode (Dodging Bot Detection Like a Boss)
+
+Stealth mode uses **patchright** to patch browser binaries and evade detection:
 
 ```bash
 pip install patchright
-patchright install
+patchright install  # Downloads patched browsers
 ```
+
+**What Patchright Does:**
+- Removes webdriver signals that scream "I'M A BOT!"
+- Modifies browser fingerprints
+- Spoofs navigator properties
+- Bypasses common bot detection techniques
+
+**Default:** Stealth is **ENABLED** (use `--no-stealth` to disable if you're feeling suicidal)
 
 ---
 
 ## ⚙️ Environment Variables
 
+Copy the example file and fill in your fucking API keys:
+
 ```bash
 cp .env.example .env
+# Then edit .env with your actual keys
 ```
+
+Check `.env.example` in the repo for the full list of variables. Main ones:
+- `OPENAI_API_KEY` - OpenAI authentication
+- `ANTHROPIC_API_KEY` - Anthropic authentication
+- `GOOGLE_API_KEY` - Google Gemini
+- `OLLAMA_ENDPOINT` - Local Ollama server (default: http://localhost:11434)
+- Plus Azure, AWS, DeepSeek, Groq, OpenRouter configs
+
+---
+
+## 🐛 Troubleshooting (When Shit Breaks)
+
+**Chrome not found:**
+- Install Chrome or Chromium, you genius
+- Or use `--browser-bin-path` to point to your browser
+
+**Ollama connection refused:**
+- Make sure Ollama server is running: `ollama serve`
+- Check the endpoint: `--provider ollama` uses `http://localhost:11434` by default
+
+**API key errors:**
+- Check your keys actually work (make test API calls)
+- Format matters: OpenAI starts with `sk-`, Anthropic with `sk-ant-`
+
+**Patchright issues:**
+- Run `patchright install` to download patched browsers
+- Check if you have write permissions
+
+**CDP connection fails:**
+- Make sure browser is running: `google-chrome --remote-debugging-port=9222`
+- Can't use `--browser-bin-path` AND `--cdp-url` together (pick one, genius)
 
 ---
 
