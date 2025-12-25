@@ -23,29 +23,15 @@ __copyright__ = "Copyright 2025 uzdabrazor"
 from .core import main as run_automation
 from .cli import main as cli_main
 
-# Package-level constants
+# Package-level constants (simplified to 2 providers)
 SUPPORTED_PROVIDERS = [
-    "openai",
-    "anthropic", 
-    "google",
     "ollama",
-    "azure",
-    "deepseek",
-    "groq", 
     "openrouter",
-    "aws"
 ]
 
 DEFAULT_MODELS = {
-    "openai": "gpt-5-mini",
-    "anthropic": "claude-opus-4-1", 
-    "google": "gemini-2.5-flash",
     "ollama": "llama3.1",
-    "azure": "gpt-5",
-    "deepseek": "deepseek-reasoner",
-    "groq": "llama-3.3-70b-versatile",
-    "openrouter": "meta-llama/llama-3.1-70b-instruct",
-    "aws": "anthropic.claude-opus-4-1-20250805-v1:0",
+    "openrouter": "anthropic/claude-3.5-sonnet",
 }
 
 # Import core dependencies
@@ -65,33 +51,18 @@ def get_supported_providers() -> list[str]:
 
 def get_default_model(provider: str) -> str:
     """Get the default model for a given provider."""
-    return DEFAULT_MODELS.get(provider, "gpt-5-mini")
+    return DEFAULT_MODELS.get(provider, "llama3.1")
 
-# Package level constants for configuration
+# Package level constants for configuration (simplified)
 CLUSTERFUCK_ENV_DEFAULTS = {
-    # Browser-use core settings
-    "OPENAI_API_KEY": "",
-    "ANTHROPIC_API_KEY": "",
-    "GOOGLE_API_KEY": "",
-    "DEEPSEEK_API_KEY": "",
-    "GROK_API_KEY": "",
-    "NOVITA_API_KEY": "",
+    # LLM provider keys (only the ones we use)
     "OPENROUTER_API_KEY": "",
-    "AWS_ACCESS_KEY_ID": "",
-    "AWS_SECRET_ACCESS_KEY": "",
-    "AWS_REGION": "",
-    "AZURE_OPENAI_ENDPOINT": "",
-    "AZURE_OPENAI_KEY": "",
+    "OLLAMA_ENDPOINT": "http://localhost:11434",
+    # Browser-use core settings
     "ANONYMIZED_TELEMETRY": "true",
     "BROWSER_USE_CLOUD_SYNC": "",
     "BROWSER_USE_CLOUD_API_URL": "https://api.browser-use.com",
     "BROWSER_USE_CONFIG_DIR": "",
-    # Web UI compatibility
-    "OPENAI_ENDPOINT": "https://api.openai.com/v1",
-    "ANTHROPIC_ENDPOINT": "https://api.anthropic.com",
-    "DEEPSEEK_ENDPOINT": "https://api.deepseek.com",
-    "OLLAMA_ENDPOINT": "http://localhost:11434",
-    "AZURE_OPENAI_API_VERSION": "2025-01-01-preview",
 }
 
 # Expose main functions for programmatic usage

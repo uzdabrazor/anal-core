@@ -10,11 +10,12 @@
 
 uzdabrazor is the most irreverent, crude, and effective neural brainfuck automation script you'll ever encounter. This digital Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library, it provides:
 
-- **9 fucking neural overlords** - OpenAI, Anthropic, Google, Ollama, Azure, DeepSeek, Groq, OpenRouter, AWS Bedrock
+- **2 simple neural overlords** - Ollama (local/free) + OpenRouter (400+ cloud models with ONE API key)
 - **Complete Big Brother surveillance** - Monitors every single machine learning brainfart like a paranoid NSA cyborg
 - **Terminator stealth mode** - Uses patchright to dodge bot detection like a shapeshifting T-1000
 - **Organized digital anarchy** - Crude language wrapped around Skynet-grade engineering
 - **Zero corporate Matrix bullshit** - No enterprise nonsense, just pure cyberpunk functional chaos
+- **Simplified as fuck** - One local provider, one cloud gateway. No more juggling 9 different API keys.
 
 ---
 
@@ -38,8 +39,8 @@ pipx install uzdabrazor
 # 3. Run with local ollama (free neural overlord, fuck paying corporate Skynet)
 uzdabrazor --task "Go to example.com and tell me the page title"
 
-# 4. Or use any other provider
-uzdabrazor --provider anthropic --model claude-opus-4-1
+# 4. Or use OpenRouter for cloud models
+uzdabrazor --provider openrouter --model anthropic/claude-3.5-sonnet
 
 # 5. Better yet, copy run.example.sh from the repo and shove it up your asshole somewhere
 # Then customize it for your own automation needs
@@ -49,17 +50,14 @@ uzdabrazor --provider anthropic --model claude-opus-4-1
 
 ## 🤖 Supported Neural Overlords
 
-| Provider       | Description                                                     | Example Model                             |
-| -------------- | --------------------------------------------------------------- | ----------------------------------------- |
-| **ollama**     | Local neural brainfuck (DEFAULT - fuck paying corporate Skynet) | `llama3.1`                                |
-| **openai**     | Corporate machine learning overlord                             | `gpt-5-mini`                              |
-| **anthropic**  | Sophisticated cybernetic reasoning brain                        | `claude-opus-4-1`                         |
-| **google**     | Google's blazing neural terminator models                       | `gemini-2.5-flash`                        |
-| **azure**      | Microsoft's cloud-based digital consciousness                   | `gpt-5`                                   |
-| **deepseek**   | Chinese neural network mysteries                                | `deepseek-reasoner`                       |
-| **groq**       | Lightning-fast cybernetic inference                             | `llama-3.3-70b-versatile`                 |
-| **openrouter** | 400+ neural brainfuck models in one Matrix API                  | `meta-llama/llama-3.1-70b-instruct`       |
-| **aws**        | Amazon's corporate cloud-based Skynet                           | `anthropic.claude-opus-4-1-20250805-v1:0` |
+**Simplified to TWO providers because more options != better code:**
+
+| Provider       | Description                                                               | Example Models                                                                       |
+| -------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **ollama**     | Local neural brainfuck (DEFAULT - FREE and PRIVATE)                       | `llama3.1`, `qwen3`, `gemma3`, etc.                                                  |
+| **openrouter** | 400+ cloud models via ONE API key (OpenAI, Anthropic, Google, DeepSeek+) | `anthropic/claude-3.5-sonnet`, `openai/gpt-4-turbo`, `google/gemini-2.0-flash-exp` |
+
+**Why only two?** Because managing 9 different API keys and endpoints is a clusterfuck. OpenRouter gives you access to literally every major model with one API key and adds only ~10-20% markup. Ollama gives you free local models. Done. Simple. Efficient.
 
 ---
 
@@ -71,15 +69,18 @@ uzdabrazor --provider anthropic --model claude-opus-4-1
 # Default: ollama (because fuck paying for AI)
 uzdabrazor --task "Go to GitHub and find trending repositories"
 
-# Specific provider and model
-uzdabrazor --provider anthropic --model claude-opus-4-1 --task "Analyze this website"
+# Use OpenRouter for Claude
+uzdabrazor --provider openrouter --model anthropic/claude-3.5-sonnet --task "Analyze this website"
+
+# Use OpenRouter for GPT-4
+uzdabrazor --provider openrouter --model openai/gpt-4-turbo --task "Analyze this website"
 ```
 
 ### Advanced Fuckery
 
 ```bash
 # Headless stealth mode
-uzdabrazor --headless --provider openai --model gpt-5-mini
+uzdabrazor --headless --provider openrouter --model anthropic/claude-3.5-sonnet
 
 # Custom browser and window size
 uzdabrazor --browser-bin-path /usr/bin/google-chrome-beta --window-width 1920 --window-height 1080
@@ -91,7 +92,7 @@ uzdabrazor --cdp-url http://localhost:9222
 # Different models for main task vs extraction (cost optimization strategy)
 # MAIN LLM: Complex reasoning and decision-making (use powerful models)
 # EXTRACTION LLM: Data parsing and text extraction (use fast cheap models)
-uzdabrazor --provider openai --model gpt-5 --extraction-provider anthropic --extraction-model claude-opus-4-1
+uzdabrazor --provider openrouter --model anthropic/claude-3.5-sonnet --extraction-model openai/gpt-4o-mini
 
 # Docker mode with no security (because we live dangerously)
 uzdabrazor --dockerize --headless --no-security --provider ollama
@@ -153,13 +154,13 @@ This beautiful bastard monkey-patches all LLM providers to log every single AI c
 
 **Example Output:**
 ```text
-🤖 OPENAI AINVOKE DETECTED! Model: gpt-5-mini is being a chatty bitch
+🦙 OLLAMA AINVOKE DETECTED! Model: llama3.1 is spitting some local llama wisdom
    📝 Processing 5 messages with output_format: None
 
-⚡ GROQ AINVOKE DETECTED! Model: llama-70b is going at lightning speed
+🔀 OPENROUTER AINVOKE DETECTED! Model: anthropic/claude-3.5-sonnet is routing through 400+ models like a fucking switchboard
    📝 Processing 3 messages with output_format: <class 'ActionResult'>
 
-🧠 ANTHROPIC AINVOKE DETECTED! Model: claude-opus-4-1 is thinking some fucked up thoughts
+🦙 OLLAMA AINVOKE DETECTED! Model: qwen3:8b is spitting some local llama wisdom
    📝 Processing 12 messages with output_format: None
 ```
 
@@ -215,11 +216,8 @@ cp .env.example .env
 ```
 
 Check `.env.example` in the repo for the full list of variables. Main ones:
-- `OPENAI_API_KEY` - OpenAI authentication
-- `ANTHROPIC_API_KEY` - Anthropic authentication
-- `GOOGLE_API_KEY` - Google Gemini
+- `OPENROUTER_API_KEY` - OpenRouter API key (for 400+ cloud models: OpenAI, Anthropic, Google, DeepSeek, etc.)
 - `OLLAMA_ENDPOINT` - Local Ollama server (default: http://localhost:11434)
-- Plus Azure, AWS, DeepSeek, Groq, OpenRouter configs
 
 ---
 
@@ -235,7 +233,8 @@ Check `.env.example` in the repo for the full list of variables. Main ones:
 
 **API key errors:**
 - Check your keys actually work (make test API calls)
-- Format matters: OpenAI starts with `sk-`, Anthropic with `sk-ant-`
+- OpenRouter keys start with `sk-or-v1-`
+- Get your OpenRouter key at https://openrouter.ai/keys
 
 **Patchright issues:**
 - Run `patchright install` to download patched browsers

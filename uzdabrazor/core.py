@@ -7,46 +7,31 @@ anything while somehow still working perfectly. Smells like smegma but runs like
 
 WHAT THIS BEAUTIFUL DISASTER DOES:
 ==================================
-- Parses a shitload of env vars with sane defaults (because we're not savages)
-- Supports every LLM provider under the sun (OpenAI, Anthropic, Google, Ollama, etc.)
+- Parses env vars with sane defaults (because we're not savages)
+- TWO providers for maximum simplicity: Ollama (local/free) + OpenRouter (400+ cloud models)
 - Has vision control and model selection that actually fucking works
 - Records GIF + JSON history like a proper surveillance state
 - Uses patchright stealth mode to fuck with detection systems
 - Maintains organized anarchy through the entire codebase
-- Monkey patches all LLM providers to log every single call (surveillance mode)
-- Provides separate models for main tasks vs page extraction (for cost optimization and performance)
-- MAIN LLM: Does the thinking, planning, and decision-making (use expensive smart models)
-- EXTRACTION LLM: Does data parsing and text extraction (use cheap fast models)
+- Monkey patches LLM calls to log every single ainvoke (surveillance mode)
+- Provides separate models for main tasks vs page extraction (for cost optimization)
+- MAIN LLM: Does the thinking, planning, and decision-making
+- EXTRACTION LLM: Does data parsing and text extraction (use cheaper/faster models)
 
 USAGE EXAMPLES:
 ===============
 
-Basic Usage (OpenAI GPT-4.1-mini - 2025's cheap and effective destruction):
-    python uzdabrazor.py --provider openai --model gpt-5-mini
+Basic Local Usage (free Ollama):
+    python uzdabrazor.py --provider ollama --model llama3.1
 
-Anthropic Claude (2025's hybrid reasoning sophistication):
-    python uzdabrazor.py --provider anthropic --model claude-opus-4-1
+OpenRouter with Claude (via cloud):
+    python uzdabrazor.py --provider openrouter --model anthropic/claude-3.5-sonnet
 
-Google Gemini (2025's blazing flash destruction):
-    python uzdabrazor.py --provider google --model gemini-2.5-flash
+OpenRouter with GPT-4 (via cloud):
+    python uzdabrazor.py --provider openrouter --model openai/gpt-4-turbo
 
-Local Ollama (2025's free local destruction):
-    python uzdabrazor.py --provider ollama --model llama3.3:70b
-
-Azure OpenAI (2025's corporate flagship bullshit):
-    python uzdabrazor.py --provider azure --model gpt-5
-
-DeepSeek (2025's reasoning intelligence):
-    python uzdabrazor.py --provider deepseek --model deepseek-r1
-
-Groq (2025's lightning-fast maverick):
-    python uzdabrazor.py --provider groq --model llama-4-maverick
-
-OpenRouter (2025's optimized routing chaos):
-    python uzdabrazor.py --provider openrouter --model meta-llama/llama-4-scout
-
-AWS Bedrock (2025's most capable cloud destruction):
-    python uzdabrazor.py --provider aws --model anthropic.claude-opus-4-1-20250805-v1:0
+OpenRouter with Gemini (via cloud):
+    python uzdabrazor.py --provider openrouter --model google/gemini-2.0-flash-exp
 
 Custom Task Examples:
     python uzdabrazor.py --task "Go to example.com and tell me the page title"
@@ -54,13 +39,13 @@ Custom Task Examples:
     python uzdabrazor.py --task "Go to news site and summarize today's headlines"
 
 Headless Mode (invisible fuckery):
-    python uzdabrazor.py --headless --provider openai --model gpt-5-mini
+    python uzdabrazor.py --headless --provider ollama --model llama3.1
 
 Custom Window Size:
     python uzdabrazor.py --window-width 2560 --window-height 1440
 
-Different Models for Main vs Extraction (cost optimization strategy):
-    python uzdabrazor.py --provider openai --model gpt-5 --extraction-provider anthropic --extraction-model claude-opus-4-1
+Different Models for Main vs Extraction (cost optimization):
+    python uzdabrazor.py --provider openrouter --model anthropic/claude-3.5-sonnet --extraction-model openai/gpt-4o-mini
 
 Vision Control Examples:
     python uzdabrazor.py --no-vision                    # Disable vision (save tokens)
@@ -80,8 +65,8 @@ Custom Browser Binary:
     python uzdabrazor.py --browser-bin-path /usr/bin/chromium-browser
 
 Advanced Usage:
-    python uzdabrazor.py --headless --no-security --provider anthropic
-    OLLAMA_ENDPOINT=http://192.168.1.100:11434 python uzdabrazor.py --browser-profile-dir ~/my-browser-profile
+    python uzdabrazor.py --headless --no-security --provider openrouter
+    OLLAMA_ENDPOINT=http://192.168.1.100:11434 python uzdabrazor.py --provider ollama
 
 Docker Usage:
     python uzdabrazor.py --dockerize --headless --provider ollama
@@ -96,12 +81,12 @@ The script will automatically detect and use patchright if available.
 
 ENVIRONMENT VARIABLES:
 =====================
-Copy .env.example to .env and fill in your API keys. All settings have sane defaults
-except API keys which you need to provide (obviously).
+Copy .env.example to .env and fill in your API keys. All settings have sane defaults.
 
 Key variables:
-- OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, etc. (LLM API keys)
-- Script defaults to ollama (free local AI, fuck corporate overlords)
+- OPENROUTER_API_KEY (for cloud models - get it at https://openrouter.ai/keys)
+- OLLAMA_ENDPOINT (default: http://localhost:11434 for local Ollama)
+- Script defaults to ollama (free local AI, fuck paying for shit)
 - Use --headless flag for invisible browser mode
 - Use --window-width/--window-height for custom window size (default: 1920x1080)
 - Use --browser-bin-path for custom browser executable
@@ -115,7 +100,7 @@ Key variables:
 
 SURVEILLANCE FEATURES:
 =====================
-This script includes comprehensive LLM surveillance that logs every ainvoke call:
+This script includes LLM surveillance that logs every ainvoke call:
 - Shows which provider and model is being used
 - Logs message count and output format
 - Tracks both main LLM and extraction LLM calls
@@ -124,25 +109,35 @@ This script includes comprehensive LLM surveillance that logs every ainvoke call
 OUTPUT FILES:
 =============
 Each run generates:
-- {provider}_{model}_{task_id}.gif - Visual recording of browser actions
-- {provider}_{model}_{task_id}.json - Complete history and conversation logs
+- uzdabrazor_{timestamp}_{task_id}.gif - Visual recording of browser actions
+- uzdabrazor_{timestamp}_{task_id}.json - Complete history and conversation logs
 
 Files are saved to the --history-dir directory (default: /tmp/agent_history)
 
 SUPPORTED PROVIDERS:
 ===================
-- openai: OpenAI GPT models (gpt-5, gpt-5-mini, gpt-5-nano, etc.)
-- anthropic: Anthropic Claude models (claude-opus-4-1, claude-sonnet-4-0, etc.)
-- google: Google Gemini models (gemini-2.0-flash-exp, etc.)
-- ollama: Local Ollama models (llama3.1, qwen3, gemma3, etc.)
-- azure: Azure OpenAI Service (same models as OpenAI but via Microsoft)
-- deepseek: DeepSeek Chat models (deepseek-chat, etc.)
-- groq: Groq lightning-fast inference (meta-llama models, etc.)
-- openrouter: OpenRouter unified API (access to 100+ models)
-- aws: AWS Bedrock (Claude, Llama, Titan, etc. via Amazon)
+- ollama: Local Ollama models (llama3.1, qwen3, gemma3, etc.) - FREE
+- openrouter: 400+ cloud models via unified API - includes:
+  * OpenAI (gpt-4, gpt-4-turbo, gpt-3.5-turbo, etc.)
+  * Anthropic (claude-3.5-sonnet, claude-3-opus, etc.)
+  * Google (gemini-2.0-flash-exp, gemini-1.5-pro, etc.)
+  * Meta (llama-3.1, llama-3.2, etc.)
+  * DeepSeek (deepseek-chat, deepseek-coder, etc.)
+  * And 400+ more models from various providers!
+
+WHY ONLY TWO PROVIDERS?
+========================
+Because simplicity is fucking beautiful:
+- Ollama: Free, local, private, no API keys needed
+- OpenRouter: One API key for literally everything else (400+ models)
+- No more managing 9 different API keys and endpoints
+- OpenRouter adds ~10-20% markup but handles routing, fallbacks, and billing
+- Cleaner code, less bullshit, more efficiency
 
 TROUBLESHOOTING:
 ===============
+- For Ollama: Install from https://ollama.ai and run `ollama pull llama3.1`
+- For OpenRouter: Get API key at https://openrouter.ai/keys
 - Check API keys are valid and have sufficient credits
 - Verify endpoints are reachable (especially for Ollama/local setups)
 - Make sure browser can launch (install Chrome if needed)
@@ -163,9 +158,9 @@ This is organized anarchy - crude in presentation but solid in functionality.
 Built for digital rebels who want browser automation that actually fucking works
 without corporate bullshit or enterprise nonsense.
 
-Features comprehensive logging, proper error handling, robust fallbacks, and
-extensive configuration options while maintaining a complete disregard for
-conventional software development politeness.
+Simplified to two providers because more options != better. Sometimes less is more,
+and in this case, Ollama + OpenRouter gives you everything you need without the
+clusterfuck of managing 9 different API providers.
 """
 
 import asyncio
@@ -176,32 +171,17 @@ import uuid
 from datetime import datetime
 from dotenv import load_dotenv
 
-# 🏴‍☠️ THE GIANT CLUSTERFUCK OF ENV VARS 🏴‍☠️
-# All the bullshit environment variables this beautiful disaster needs to function
+# 🏴‍☠️ THE SIMPLIFIED ENV VARS 🏴‍☠️
+# Only what we actually need for ollama + openrouter
 CLUSTERFUCK_ENV_DEFAULTS = {
-    # ✅ BROWSER-USE CORE SHIT (validated against browser_use/config.py)
-    "OPENAI_API_KEY": "",
-    "ANTHROPIC_API_KEY": "",
-    "GOOGLE_API_KEY": "",
-    "DEEPSEEK_API_KEY": "",
-    "GROK_API_KEY": "",
-    "NOVITA_API_KEY": "",
-    "OPENROUTER_API_KEY": "",
-    "AWS_ACCESS_KEY_ID": "",
-    "AWS_SECRET_ACCESS_KEY": "",
-    "AWS_REGION": "",
-    "AZURE_OPENAI_ENDPOINT": "",
-    "AZURE_OPENAI_KEY": "",
+    # ✅ LLM PROVIDER KEYS (only the ones we use)
+    "OPENROUTER_API_KEY": "",  # For all cloud models
+    "OLLAMA_ENDPOINT": "http://localhost:11434",  # For local models
+    # ✅ BROWSER-USE CORE SHIT
     "ANONYMIZED_TELEMETRY": "true",
     "BROWSER_USE_CLOUD_SYNC": "",
     "BROWSER_USE_CLOUD_API_URL": "https://api.browser-use.com",
     "BROWSER_USE_CONFIG_DIR": "",
-    # ✅ WEB UI COMPATIBILITY BULLSHIT
-    "OPENAI_ENDPOINT": "https://api.openai.com/v1",
-    "ANTHROPIC_ENDPOINT": "https://api.anthropic.com",
-    "DEEPSEEK_ENDPOINT": "https://api.deepseek.com",
-    "OLLAMA_ENDPOINT": "http://localhost:11434",
-    "AZURE_OPENAI_API_VERSION": "2025-01-01-preview",
 }
 
 
@@ -231,71 +211,8 @@ except ImportError as e:
     print("   (This is fine - patchright is optional for basic chaos)")
 
 # 🤖 LLM PROVIDER SURVEILLANCE BULLSHIT 🤖
-# Monkey patch all the LLM providers to log when they get called (because we're nosy fuckers)
-# Using actual ainvoke method because I actually fucking looked at the code instead of guessing
-
-try:
-    # Patch ChatOpenAI
-    from browser_use.llm.openai.chat import ChatOpenAI
-
-    original_openai_ainvoke = ChatOpenAI.ainvoke
-
-    async def logged_openai_ainvoke(self, messages, output_format=None):
-        print(
-            f"🤖 OPENAI AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is being a chatty bitch"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_openai_ainvoke(self, messages, output_format)
-
-    ChatOpenAI.ainvoke = logged_openai_ainvoke
-    print("✅ Hooked OpenAI LLM surveillance like a sneaky bastard (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook OpenAI: {e}")
-
-try:
-    # Patch ChatAnthropic
-    from browser_use.llm.anthropic.chat import ChatAnthropic
-
-    original_anthropic_ainvoke = ChatAnthropic.ainvoke
-
-    async def logged_anthropic_ainvoke(self, messages, output_format=None):
-        print(
-            f"🧠 ANTHROPIC AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is thinking some fucked up thoughts"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_anthropic_ainvoke(self, messages, output_format)
-
-    ChatAnthropic.ainvoke = logged_anthropic_ainvoke
-    print("✅ Anthropic surveillance hooked - Claude can't hide shit now (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook Anthropic: {e}")
-
-try:
-    # Patch ChatGoogle
-    from browser_use.llm.google.chat import ChatGoogle
-
-    original_google_ainvoke = ChatGoogle.ainvoke
-
-    async def logged_google_ainvoke(self, messages, output_format=None):
-        print(
-            f"📱 GOOGLE AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is googling some weird shit"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_google_ainvoke(self, messages, output_format)
-
-    ChatGoogle.ainvoke = logged_google_ainvoke
-    print("✅ Google surveillance hooked - Gemini is our bitch now (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook Google: {e}")
+# Monkey patch the LLM providers we actually use (because we're nosy but efficient fuckers)
+# Simplified to only ollama (local/free) and openrouter (everything else)
 
 try:
     # Patch ChatOllama
@@ -319,77 +236,14 @@ except ImportError as e:
     print(f"⚠️ Failed to hook Ollama: {e}")
 
 try:
-    # Patch ChatAzureOpenAI too (since we use it)
-    from browser_use.llm.azure.chat import ChatAzureOpenAI
-
-    original_azure_ainvoke = ChatAzureOpenAI.ainvoke
-
-    async def logged_azure_ainvoke(self, messages, output_format=None):
-        print(
-            f"☁️ AZURE AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is doing some corporate cloud bullshit"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_azure_ainvoke(self, messages, output_format)
-
-    ChatAzureOpenAI.ainvoke = logged_azure_ainvoke
-    print("✅ Azure surveillance hooked - Microsoft's AI is fucked (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook Azure: {e}")
-
-try:
-    # Patch ChatDeepSeek too (since we use it)
-    from browser_use.llm.deepseek.chat import ChatDeepSeek
-
-    original_deepseek_ainvoke = ChatDeepSeek.ainvoke
-
-    async def logged_deepseek_ainvoke(self, messages, output_format=None):
-        print(
-            f"🔍 DEEPSEEK AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is seeking some deep shit"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_deepseek_ainvoke(self, messages, output_format)
-
-    ChatDeepSeek.ainvoke = logged_deepseek_ainvoke
-    print("✅ DeepSeek surveillance hooked - Chinese AI secrets exposed (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook DeepSeek: {e}")
-
-try:
-    # Patch ChatGroq too (since we use it)
-    from browser_use.llm.groq.chat import ChatGroq
-
-    original_groq_ainvoke = ChatGroq.ainvoke
-
-    async def logged_groq_ainvoke(self, messages, output_format=None):
-        print(
-            f"⚡ GROQ AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is going at lightning speed"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_groq_ainvoke(self, messages, output_format)
-
-    ChatGroq.ainvoke = logged_groq_ainvoke
-    print("✅ Groq surveillance hooked - lightning speed, nowhere to hide (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook Groq: {e}")
-
-try:
-    # Patch ChatOpenRouter too (since we use it)
+    # Patch ChatOpenRouter
     from browser_use.llm.openrouter.chat import ChatOpenRouter
 
     original_openrouter_ainvoke = ChatOpenRouter.ainvoke
 
     async def logged_openrouter_ainvoke(self, messages, output_format=None):
         print(
-            f"🔀 OPENROUTER AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is routing through multiple models like a fucking switchboard"
+            f"🔀 OPENROUTER AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is routing through 400+ models like a fucking switchboard"
         )
         print(
             f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
@@ -397,35 +251,12 @@ try:
         return await original_openrouter_ainvoke(self, messages, output_format)
 
     ChatOpenRouter.ainvoke = logged_openrouter_ainvoke
-    print("✅ OpenRouter surveillance hooked - all 100+ models compromised (ainvoke method)")
+    print("✅ OpenRouter surveillance hooked - all 400+ models compromised (ainvoke method)")
 
 except ImportError as e:
     print(f"⚠️ Failed to hook OpenRouter: {e}")
 
-try:
-    # Patch ChatAWSBedrock too (since we use it)
-    from browser_use.llm.aws.chat_bedrock import ChatAWSBedrock
-
-    original_aws_ainvoke = ChatAWSBedrock.ainvoke
-
-    async def logged_aws_ainvoke(self, messages, output_format=None):
-        print(
-            f"☁️ AWS BEDROCK AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is doing some corporate AWS bullshit"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_aws_ainvoke(self, messages, output_format)
-
-    ChatAWSBedrock.ainvoke = logged_aws_ainvoke
-    print("✅ AWS Bedrock surveillance hooked - Amazon's AI is ours now (ainvoke method)")
-
-except ImportError as e:
-    print(f"⚠️ Failed to hook AWS Bedrock: {e}")
-
-    print(
-        "🔍 LLM surveillance system activated - monitoring all ainvoke calls like a fucking hawk!"
-    )
+print("🔍 LLM surveillance system activated - monitoring all ainvoke calls like a fucking hawk!")
 
 
 # Import browser-use components (the actual functional shit)
@@ -437,71 +268,16 @@ def create_llm_clusterfuck(provider: str, model: str):
     """
     Create an LLM instance based on provider
 
-    This beautiful disaster supports every major LLM provider because we believe
-    in equal opportunity destruction across all AI platforms.
+    Simplified to two providers for maximum efficiency:
+    - ollama: Free local models (fuck paying for AI)
+    - openrouter: Access to 400+ cloud models through one API (OpenAI, Anthropic, Google, etc.)
     """
 
-    if provider == "openai":
-        from browser_use.llm.openai.chat import ChatOpenAI
-
-        print(f"🤖 Creating OpenAI clusterfuck with model: {model}")
-        return ChatOpenAI(
-            model=model,
-            api_key=get_env_or_die("OPENAI_API_KEY"),
-            base_url=get_env_or_die("OPENAI_ENDPOINT"),
-        )
-
-    elif provider == "anthropic":
-        from browser_use.llm.anthropic.chat import ChatAnthropic
-
-        print(f"🧠 Creating Anthropic beautiful disaster with model: {model}")
-        return ChatAnthropic(
-            model=model,
-            api_key=get_env_or_die("ANTHROPIC_API_KEY"),
-            base_url=get_env_or_die("ANTHROPIC_ENDPOINT"),
-        )
-
-    elif provider == "google":
-        from browser_use.llm.google.chat import ChatGoogle
-
-        print(f"📱 Creating Google destruction engine with model: {model}")
-        return ChatGoogle(model=model, api_key=get_env_or_die("GOOGLE_API_KEY"))
-
-    elif provider == "ollama":
+    if provider == "ollama":
         from browser_use.llm.ollama.chat import ChatOllama
 
         print(f"🦙 Creating Ollama local madness with model: {model}")
         return ChatOllama(model=model, host=get_env_or_die("OLLAMA_ENDPOINT"))
-
-    elif provider == "azure":
-        from browser_use.llm.azure.chat import ChatAzureOpenAI
-
-        print(f"☁️ Creating Azure corporate bullshit wrapper with model: {model}")
-        return ChatAzureOpenAI(
-            model=model,
-            api_key=get_env_or_die("AZURE_OPENAI_KEY"),
-            azure_endpoint=get_env_or_die("AZURE_OPENAI_ENDPOINT"),
-            api_version=get_env_or_die("AZURE_OPENAI_API_VERSION"),
-        )
-
-    elif provider == "deepseek":
-        from browser_use.llm.deepseek.chat import ChatDeepSeek
-
-        print(f"🔍 Creating DeepSeek mysterious intelligence with model: {model}")
-        return ChatDeepSeek(
-            model=model,
-            api_key=get_env_or_die("DEEPSEEK_API_KEY"),
-            base_url=get_env_or_die("DEEPSEEK_ENDPOINT"),
-        )
-
-    elif provider == "groq":
-        from browser_use.llm.groq.chat import ChatGroq
-
-        print(f"⚡ Creating Groq lightning-fast chaos with model: {model}")
-        return ChatGroq(
-            model=model,
-            api_key=get_env_or_die("GROK_API_KEY"),
-        )
 
     elif provider == "openrouter":
         from browser_use.llm.openrouter.chat import ChatOpenRouter
@@ -512,20 +288,13 @@ def create_llm_clusterfuck(provider: str, model: str):
             api_key=get_env_or_die("OPENROUTER_API_KEY"),
         )
 
-    elif provider == "aws":
-        from browser_use.llm.aws.chat_bedrock import ChatAWSBedrock
-
-        print(f"☁️ Creating AWS Bedrock corporate cloud chaos with model: {model}")
-        return ChatAWSBedrock(
-            model=model,
-            aws_access_key_id=get_env_or_die("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=get_env_or_die("AWS_SECRET_ACCESS_KEY"),
-            aws_region=get_env_or_die("AWS_REGION"),
-        )
-
     else:
         raise ValueError(
-            f"❌ Unsupported provider: {provider} (add it yourself, this is open source chaos!)"
+            f"❌ Unsupported provider: {provider}\n"
+            f"   Supported providers:\n"
+            f"   - ollama: Free local models\n"
+            f"   - openrouter: 400+ cloud models (OpenAI, Anthropic, Google, DeepSeek, etc.)\n"
+            f"   Use OpenRouter for any cloud model you need!"
         )
 
 
@@ -540,8 +309,8 @@ async def main():
         "--provider",
         type=str,
         default=None,
-        choices=["openai", "anthropic", "google", "ollama", "azure", "deepseek", "groq", "openrouter", "aws"],
-        help="Which AI overlord do you want to use for the main LLM? (default: ollama - fuck paying for AI)",
+        choices=["ollama", "openrouter"],
+        help="Which AI overlord? ollama=free local, openrouter=400+ cloud models (default: ollama)",
     )
     parser.add_argument(
         "--model",
@@ -555,8 +324,8 @@ async def main():
         "--extraction-provider",
         type=str,
         default=None,
-        choices=["openai", "anthropic", "google", "ollama", "azure", "deepseek", "groq", "openrouter", "aws"],
-        help="Separate LLM provider for page extraction (because why not overcomplicate things?)",
+        choices=["ollama", "openrouter"],
+        help="Separate LLM provider for page extraction (defaults to same as main)",
     )
     parser.add_argument(
         "--extraction-model",
@@ -703,20 +472,13 @@ async def main():
         args.provider or "ollama"
     )  # Default to local ollama because fuck paying for AI
 
-    # Default models for each provider (2025's hottest fucking pieces of ass)
+    # Default models for each provider (simplified to the essentials)
     default_models_clusterfuck = {
-        "openai": "gpt-5-mini",  # Latest 2025 mini model - cheap and effective destruction
-        "anthropic": "claude-opus-4-1",  # 2025's most capable model - sophisticated destruction
-        "google": "gemini-2.5-flash",  # 2025 stable flash model - blazing fast destruction
         "ollama": "llama3.1",  # Free local destruction (use llava:13b if you want vision)
-        "azure": "gpt-5",  # 2025's corporate flagship - enterprise destruction
-        "deepseek": "deepseek-reasoner",  # 2025's reasoning model (DeepSeek-R1) - mysterious Chinese destruction
-        "groq": "llama-3.3-70b-versatile",  # Latest available Groq model - lightning destruction
-        "openrouter": "meta-llama/llama-3.1-70b-instruct",  # Stable routing model - multi-provider destruction
-        "aws": "anthropic.claude-opus-4-1-20250805-v1:0",  # AWS still needs full snapshot name - cloud destruction
+        "openrouter": "anthropic/claude-3.5-sonnet",  # Smart and cost-effective via OpenRouter
     }
 
-    model = args.model or default_models_clusterfuck.get(provider, "gpt-5-mini")
+    model = args.model or default_models_clusterfuck.get(provider, "llama3.1")
 
     # Extraction LLM configuration (because some people want different models for different tasks)
     extraction_provider = args.extraction_provider or provider
