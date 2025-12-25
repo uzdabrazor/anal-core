@@ -220,14 +220,14 @@ try:
 
     original_ollama_ainvoke = ChatOllama.ainvoke
 
-    async def logged_ollama_ainvoke(self, messages, output_format=None):
+    async def logged_ollama_ainvoke(self, messages, output_format=None, **kwargs):
         print(
             f"🦙 OLLAMA AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is spitting some local llama wisdom"
         )
         print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
+            f"   📝 Processing {len(messages)} messages with output_format: {output_format}, kwargs: {list(kwargs.keys())}"
         )
-        return await original_ollama_ainvoke(self, messages, output_format)
+        return await original_ollama_ainvoke(self, messages, output_format, **kwargs)
 
     ChatOllama.ainvoke = logged_ollama_ainvoke
     print("✅ Ollama surveillance hooked - local llama can't escape (ainvoke method)")
@@ -236,25 +236,27 @@ except ImportError as e:
     print(f"⚠️ Failed to hook Ollama: {e}")
 
 try:
-    # Patch ChatOpenRouter
-    from browser_use.llm.openrouter.chat import ChatOpenRouter
+    # Patch ChatOpenAI (used for OpenRouter)
+    from langchain_openai import ChatOpenAI
 
-    original_openrouter_ainvoke = ChatOpenRouter.ainvoke
+    original_chatopenai_ainvoke = ChatOpenAI.ainvoke
 
-    async def logged_openrouter_ainvoke(self, messages, output_format=None):
-        print(
-            f"🔀 OPENROUTER AINVOKE DETECTED! Model: {getattr(self, 'model', 'unknown')} is routing through 400+ models like a fucking switchboard"
-        )
-        print(
-            f"   📝 Processing {len(messages)} messages with output_format: {output_format}"
-        )
-        return await original_openrouter_ainvoke(self, messages, output_format)
+    async def logged_chatopenai_ainvoke(self, messages, output_format=None, **kwargs):
+        base_url = getattr(self, 'openai_api_base', None)
+        if base_url and 'openrouter.ai' in str(base_url):
+            print(
+                f"🔀 OPENROUTER AINVOKE DETECTED! Model: {getattr(self, 'model_name', 'unknown')} is routing through 400+ models like a fucking switchboard"
+            )
+            print(
+                f"   📝 Processing {len(messages)} messages with output_format: {output_format}, kwargs: {list(kwargs.keys())}"
+            )
+        return await original_chatopenai_ainvoke(self, messages, output_format, **kwargs)
 
-    ChatOpenRouter.ainvoke = logged_openrouter_ainvoke
+    ChatOpenAI.ainvoke = logged_chatopenai_ainvoke
     print("✅ OpenRouter surveillance hooked - all 400+ models compromised (ainvoke method)")
 
 except ImportError as e:
-    print(f"⚠️ Failed to hook OpenRouter: {e}")
+    print(f"⚠️ Failed to hook OpenRouter (ChatOpenAI): {e}")
 
 print("🔍 LLM surveillance system activated - monitoring all ainvoke calls like a fucking hawk!")
 
@@ -280,12 +282,16 @@ def create_llm_clusterfuck(provider: str, model: str):
         return ChatOllama(model=model, host=get_env_or_die("OLLAMA_ENDPOINT"))
 
     elif provider == "openrouter":
-        from browser_use.llm.openrouter.chat import ChatOpenRouter
+        from langchain_openai import ChatOpenAI
 
         print(f"🔀 Creating OpenRouter multi-model chaos with model: {model}")
-        return ChatOpenRouter(
+        return ChatOpenAI(
             model=model,
-            api_key=get_env_or_die("OPENROUTER_API_KEY"),
+            openai_api_key=get_env_or_die("OPENROUTER_API_KEY"),
+            openai_api_base="https://openrouter.ai/api/v1",
+            temperature=0.0,
+            max_tokens=4096,
+            model_kwargs={"tool_choice": "auto"}
         )
 
     else:

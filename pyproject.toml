@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "uzdabrazor"
-version = "1.0.2"
+version = "1.0.4"
 description = "The Anal-King of AI Browser Automation - A beautifully fucked-up browser automation script that actually works"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -47,6 +47,7 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "Pillow>=9.0.0",
     "patchright>=1.0.0",
+    "langchain-openai>=0.1.0",
 ]
 
 [project.optional-dependencies]

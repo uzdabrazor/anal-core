@@ -90,6 +90,17 @@ Grab `.env.example` from the [GitHub repo](https://github.com/uzdabrazor/anal-co
 
 **Why only two?** Because managing 9 different API keys and endpoints is a clusterfuck. OpenRouter gives you access to literally every major model with one API key and adds only ~10-20% markup. Ollama gives you free local models. Done. Simple. Efficient.
 
+### OpenRouter Configuration
+
+OpenRouter uses the standard `ChatOpenAI` from LangChain with optimized settings:
+
+- **Temperature**: Set to `0.0` for deterministic, consistent browser actions
+- **Max Tokens**: Limited to `4096` for cost control and response quality
+- **Tool Choice**: Set to `auto` for proper function calling support
+- **Base URL**: `https://openrouter.ai/api/v1`
+
+These settings ensure reliable browser automation while keeping costs predictable.
+
 ---
 
 ## 🎯 Usage Examples
