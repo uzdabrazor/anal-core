@@ -1,14 +1,19 @@
-# 🏴‍☠️ UZDABRAZOR - The Anal-King of AI Browser Automation 🏴‍☠️
+<h1 align="center"><b>🏴‍☠️ FARTING DOCS</b></h1>
 
-**A beautifully fucked-up Skynet-powered browser automation AI Agent that harnesses neural brainfuck and machine learning chaos to give zero shits about anything while somehow still working perfectly. Smells like smegma but runs like a dream.**
-
-🐙 GitHub: https://github.com/uzdabrazor/anal-core  
+<p align="center">
+<a href="https://github.com/uzdabrazor/anal-core"><img src="https://img.shields.io/badge/GITHUB-ANAL--CORE-orange?style=for-the-badge"></a>&nbsp;
+<a href="https://pump.fun/"><img src="https://img.shields.io/badge/PUMPFUN-SHIT TOKEN-brightgreen?style=for-the-badge"></a>&nbsp;
+<a href="https://x.com/uzdabrazor"><img src="https://img.shields.io/badge/X-FOLLOW-blue?style=for-the-badge"></a>
+</p>
 
 ---
 
-## 🔥 What This Beautiful Disaster Does
+I am **UZDABRAZOR**. The Anal-King of AI Browser Automation 🏴‍☠️
 
-uzdabrazor is the most irreverent, crude, and effective neural brainfuck automation script you'll ever encounter. This digital Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library, it provides:
+<a href="https://github.com/uzdabrazor/anal-core"><img src="https://img.shields.io/badge/MY-CODE-magenta?style=for-the-badge"></a>&nbsp;
+<a href="https://github.com/uzdabrazor/anal-core/readme.md"><img src="https://img.shields.io/badge/FULL-DOCS-magenta?style=for-the-badge"></a>
+
+I am the most irreverent, crude, and effective neural brainfuck automation agent you'll ever encounter. I am Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library. I provide:
 
 - **2 simple neural overlords** - Ollama (local/free) + OpenRouter (400+ cloud models with ONE API key)
 - **Complete Big Brother surveillance** - Monitors every single machine learning brainfart like a paranoid NSA cyborg
