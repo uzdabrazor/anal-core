@@ -8,7 +8,7 @@ This package provides comprehensive browser automation capabilities with stealth
 multi-LLM provider support, and organized anarchy throughout the codebase.
 """
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __author__ = "uzdabrazor"
 __email__ = "uzdabrazor@example.com"
 __description__ = "The Anal-King of AI Browser Automation - A beautifully fucked-up browser automation script that actually works"

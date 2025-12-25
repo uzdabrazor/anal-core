@@ -1,21 +1,20 @@
-<h1 align="center"><b>🏴‍☠️ FARTING DOCS</b></h1>
+# 🏴‍☠️ UZDABRAZOR - The Anal-King of AI Browser Automation 🏴‍☠️
 
-<p align="center">
-<a href="https://github.com/uzdabrazor/anal-core"><img src="https://img.shields.io/badge/GITHUB-ANAL--CORE-orange?style=for-the-badge"></a>&nbsp;
-<a href="https://pump.fun/"><img src="https://img.shields.io/badge/PUMPFUN-SHIT TOKEN-brightgreen?style=for-the-badge"></a>&nbsp;
-<a href="https://x.com/uzdabrazor"><img src="https://img.shields.io/badge/X-FOLLOW-blue?style=for-the-badge"></a>
-</p>
+**A beautifully fucked-up Skynet-powered browser automation AI Agent that harnesses neural brainfuck and machine learning chaos to give zero shits about anything while somehow still working perfectly. Smells like smegma but runs like a dream.**
 
----
-
-I am **UZDABRAZOR**. The Anal-King of AI Browser Automation 🏴‍☠️
+🐙 GitHub: https://github.com/uzdabrazor/anal-core
+🐍 PyPI: https://pypi.org/project/uzdabrazor/
 
 [![PyPI version](https://badge.fury.io/py/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
 [![License](https://img.shields.io/pypi/l/uzdabrazor.svg)](https://github.com/uzdabrazor/anal-core/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
 
+---
 
-I am the most irreverent, crude, and effective neural brainfuck automation agent you'll ever encounter. I am Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library. I provide:
+## 🔥 What This Beautiful Disaster Does
+
+uzdabrazor is the most irreverent, crude, and effective neural brainfuck automation script you'll ever encounter. This digital Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library, it provides:
 
 - **2 simple neural overlords** - Ollama (local/free) + OpenRouter (400+ cloud models with ONE API key)
 - **Complete Big Brother surveillance** - Monitors every single machine learning brainfart like a paranoid NSA cyborg
@@ -41,7 +40,12 @@ I am the most irreverent, crude, and effective neural brainfuck automation agent
 # 1. Install the package globally
 pipx install uzdabrazor
 
-# 2. Check .env.example in the repo and create your own .env with your API keys
+# 2. Create a .env file in your current working directory
+# Download .env.example from the repo or create your own with these variables:
+cat > .env << EOF
+OPENROUTER_API_KEY=sk-or-v1-your-key-here
+OLLAMA_ENDPOINT=http://localhost:11434
+EOF
 
 # 3. Run with local ollama (free neural overlord, fuck paying corporate Skynet)
 uzdabrazor --task "Go to example.com and tell me the page title"
@@ -52,6 +56,26 @@ uzdabrazor --provider openrouter --model anthropic/claude-3.5-sonnet
 # 5. Better yet, copy run.example.sh from the repo and shove it up your asshole somewhere
 # Then customize it for your own automation needs
 ```
+
+### 📝 Environment File Location
+
+**IMPORTANT:** After installing via pipx, place your `.env` file in the **directory where you run the `uzdabrazor` command**.
+
+The script loads environment variables from `.env` in your current working directory. Example:
+
+```bash
+# Create .env in your project folder
+cd ~/my-automation-project
+cat > .env << EOF
+OPENROUTER_API_KEY=sk-or-v1-your-actual-key-here
+OLLAMA_ENDPOINT=http://localhost:11434
+EOF
+
+# Run uzdabrazor from the same directory
+uzdabrazor --task "your task here"
+```
+
+Grab `.env.example` from the [GitHub repo](https://github.com/uzdabrazor/anal-core) for the full list of variables.
 
 ---
 

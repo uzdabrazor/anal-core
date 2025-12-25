@@ -299,6 +299,8 @@ def create_llm_clusterfuck(provider: str, model: str):
 
 
 async def main():
+    load_dotenv()
+
     parser = argparse.ArgumentParser(
         description="🏴‍☠️ uzdabrazor - The Anal-King of AI Browser Automation That Actually Fucking Works",
         epilog="Love it or hate it, this clusterfuck gets the job done. Peen goes in vageen.",
@@ -503,10 +505,7 @@ async def main():
     # 🌐 BROWSER CONFIGURATION CLUSTERFUCK 🌐
     cdp_url = args.cdp_url or os.getenv("BROWSER_CDP")
     if not cdp_url:
-        debug_host = args.debug_host  # Use command line argument
-        debug_port = args.debug_port  # Use command line argument
-        cdp_url = f"http://{debug_host}:{debug_port}"
-        print(f"🔧 No CDP URL specified, using default debugging: {cdp_url}")
+        print(f"🔧 No CDP URL specified, will launch own browser instance")
 
     # Browser behavior settings (because browsers are needy little shits)
     headless = args.headless  # Use command line argument instead of env var
@@ -517,7 +516,8 @@ async def main():
     # browser_executable already defined in validation section above
     save_history_path = args.history_dir  # Use command line argument
 
-    print(f"🔧 CDP Endpoint: {cdp_url}")
+    if cdp_url:
+        print(f"🔧 CDP Endpoint: {cdp_url}")
     print(
         f"🔧 Headless Mode: {headless} {'(invisible chaos)' if headless else '(visible mayhem)'}"
     )
