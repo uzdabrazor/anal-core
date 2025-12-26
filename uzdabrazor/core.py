@@ -236,27 +236,51 @@ except ImportError as e:
     print(f"⚠️ Failed to hook Ollama: {e}")
 
 try:
-    # Patch ChatOpenAI (used for OpenRouter)
     from langchain_openai import ChatOpenAI
 
     original_chatopenai_ainvoke = ChatOpenAI.ainvoke
 
-    async def logged_chatopenai_ainvoke(self, messages, output_format=None, **kwargs):
-        base_url = getattr(self, 'openai_api_base', None)
+    async def logged_chatopenai_ainvoke(self, input, *args, **kwargs):
+        base_url = getattr(self, 'openai_api_base', None) or getattr(self, 'base_url', None)
         if base_url and 'openrouter.ai' in str(base_url):
+            msg_count = len(input) if hasattr(input, '__len__') else '?'
             print(
-                f"🔀 OPENROUTER AINVOKE DETECTED! Model: {getattr(self, 'model_name', 'unknown')} is routing through 400+ models like a fucking switchboard"
+                f"🔀 OPENROUTER (langchain) AINVOKE! Model: {getattr(self, 'model_name', 'unknown')}"
             )
             print(
-                f"   📝 Processing {len(messages)} messages with output_format: {output_format}, kwargs: {list(kwargs.keys())}"
+                f"   📝 Processing {msg_count} langchain messages"
             )
-        return await original_chatopenai_ainvoke(self, messages, output_format, **kwargs)
+        return await original_chatopenai_ainvoke(self, input, *args, **kwargs)
 
     ChatOpenAI.ainvoke = logged_chatopenai_ainvoke
-    print("✅ OpenRouter surveillance hooked - all 400+ models compromised (ainvoke method)")
+    print("✅ OpenRouter surveillance hooked via ChatOpenAI (langchain layer)")
 
-except ImportError as e:
+except (ImportError, AttributeError) as e:
     print(f"⚠️ Failed to hook OpenRouter (ChatOpenAI): {e}")
+
+try:
+    from uzdabrazor.langchain_compat import ChatLangchain
+
+    original_chatlangchain_ainvoke = ChatLangchain.ainvoke
+
+    async def logged_chatlangchain_ainvoke(self, messages, output_format=None, **kwargs):
+        msg_count = len(messages) if hasattr(messages, '__len__') else '?'
+        output_type = output_format.__name__ if output_format else 'str'
+        provider = getattr(self, 'provider', 'unknown')
+        name = getattr(self, 'name', 'unknown')
+        print(
+            f"🌐 BROWSER-USE LLM CALL! Provider: {provider}, Model: {name}"
+        )
+        print(
+            f"   📝 {msg_count} browser-use messages -> output_format: {output_type}, kwargs: {list(kwargs.keys())}"
+        )
+        return await original_chatlangchain_ainvoke(self, messages, output_format, **kwargs)
+
+    ChatLangchain.ainvoke = logged_chatlangchain_ainvoke
+    print("✅ ChatLangchain wrapper surveillance hooked (browser-use layer)")
+
+except (ImportError, AttributeError) as e:
+    print(f"⚠️ Failed to hook ChatLangchain wrapper: {e}")
 
 print("🔍 LLM surveillance system activated - monitoring all ainvoke calls like a fucking hawk!")
 
@@ -283,16 +307,15 @@ def create_llm_clusterfuck(provider: str, model: str):
 
     elif provider == "openrouter":
         from langchain_openai import ChatOpenAI
+        from uzdabrazor.langchain_compat import ChatLangchain
 
         print(f"🔀 Creating OpenRouter multi-model chaos with model: {model}")
-        return ChatOpenAI(
+        langchain_model = ChatOpenAI(
             model=model,
-            openai_api_key=get_env_or_die("OPENROUTER_API_KEY"),
-            openai_api_base="https://openrouter.ai/api/v1",
-            temperature=0.0,
-            max_tokens=4096,
-            model_kwargs={"tool_choice": "auto"}
+            api_key=get_env_or_die("OPENROUTER_API_KEY"),
+            base_url="https://openrouter.ai/api/v1",
         )
+        return ChatLangchain(chat=langchain_model)
 
     else:
         raise ValueError(

@@ -12,7 +12,7 @@ echo ""
 
 # Option 1: OpenRouter (ONE API KEY FOR 400+ MODELS)
 # Uncomment this if you want cloud models (OpenAI, Anthropic, Google, DeepSeek, etc.)
-export OPENROUTER_API_KEY="sk-or-...YOURKEY...-or-sk"
+export OPENROUTER_API_KEY="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"
 
 
 
