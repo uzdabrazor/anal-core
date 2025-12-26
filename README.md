@@ -2,16 +2,17 @@
 
 **A beautifully fucked-up Skynet-powered browser automation AI Agent that harnesses neural brainfuck and machine learning chaos to give zero shits about anything while somehow still working perfectly. Smells like smegma but runs like a dream.**
 
-🐙 GitHub: https://github.com/uzdabrazor/anal-core
-🐍 PyPI: https://pypi.org/project/uzdabrazor/
+<p align="center">
+<a href="https://github.com/uzdabrazor/anal-core"><img src="https://img.shields.io/badge/GITHUB-ANAL--CORE-orange?style=for-the-badge"></a>&nbsp;
+<a href="https://pump.fun/coin/DCDQBmZM9HYcfqDj8PQXzEQxvEtmWSKmAFWScKcxpump"><img src="https://img.shields.io/badge/PUMPFUN-SHIT TOKEN-brightgreen?style=for-the-badge"></a>&nbsp;
+<a href="https://x.com/uzdabrazor"><img src="https://img.shields.io/badge/X-FOLLOW-blue?style=for-the-badge"></a>
+</p>
 
+---
 [![PyPI version](https://badge.fury.io/py/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
 [![License](https://img.shields.io/pypi/l/uzdabrazor.svg)](https://github.com/uzdabrazor/anal-core/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/pypi/dm/uzdabrazor.svg)](https://pypi.org/project/uzdabrazor/)
-
----
-
 ## 🔥 What This Beautiful Disaster Does
 
 uzdabrazor is the most irreverent, crude, and effective neural brainfuck automation script you'll ever encounter. This digital Skynet harnesses machine learning chaos and turns your browser into an unstoppable cybernetic organism. Built on top of the excellent [browser-use](https://github.com/browser-use/browser-use) library, it provides:
