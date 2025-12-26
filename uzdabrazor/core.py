@@ -676,13 +676,11 @@ async def main():
             print("   (Now that's what I call a complete clusterfuck)")
 
     finally:
-        # 🧹 CLEANUP THE CHAOS (responsible anarchists clean up after themselves)
         try:
-            await browser_session.close()
+            await browser_session.stop()
             print("🧹 Browser session cleaned up (responsible chaos)")
-        except Exception as cleanup_error:
-            print(f"⚠️ Browser cleanup failed: {cleanup_error}")
-            print("   (Browser might be stuck in digital purgatory)")
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":
